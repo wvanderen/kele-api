@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'httparty'
+require 'json'
 
 class Kele
     include HTTParty
@@ -12,10 +13,17 @@ class Kele
             'password': password
         })
         puts "Error: Invalid Credentials" if response.code == 401
-        @auth = response["auth_token"]
+        @auth_token = response["auth_token"]
         
-        puts @auth
+        puts @auth_token
     end
+    
+    def get_me
+        response = self.class.get(base_url("users/me"), headers: { "authorization" => @auth_token })
+        @json = JSON.generate(response)
+        JSON.parse(@json)
+    end
+        
     
     private
     
