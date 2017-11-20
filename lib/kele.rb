@@ -2,10 +2,12 @@ require 'rubygems'
 require 'httparty'
 require 'json'
 require './lib/roadmap.rb'
+require './lib/messages.rb'
 
 class Kele
     include HTTParty
     include Roadmap
+    include Messages
 
     def initialize (email, password)
         response = self.class.post(base_url("sessions"),
@@ -29,6 +31,12 @@ class Kele
         response = self.class.get(base_url("mentors/#{mentor_id}/student_availability"), headers: {"authorization" => @auth_token })
         @json = JSON.generate(response)
         JSON.parse(@json)
+    end
+    
+    def create_message(sender, recipient_id, subject, text)
+        response = self.class.post(base_url("messages"), body: {"user_id": sender, "recipient_id": recipient_id, "subject": subject, "stripped-text": text}, headers: { "authorization" => @auth_token })
+        puts response
+
     end
 
     private
