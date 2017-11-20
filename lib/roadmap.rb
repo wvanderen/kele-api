@@ -6,7 +6,7 @@ module Roadmap
     end
     
     def get_checkpoint(checkpoint_id)
-        response = self.class.get(base_url("checkpoints/#{checkpoint_id}"), headers: {"content_type" => 'applicaiton/json', "authorization" => @auth_token })
+        response = self.class.get(base_url("checkpoints/#{checkpoint_id}"), headers: {"content_type" => 'application/json', "authorization" => @auth_token })
         @json = JSON.generate(response)
         JSON.parse(@json)
     end
