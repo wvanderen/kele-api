@@ -36,8 +36,13 @@ class Kele
     def create_message(sender, recipient_id, subject, text)
         response = self.class.post(base_url("messages"), body: {"user_id": sender, "recipient_id": recipient_id, "subject": subject, "stripped-text": text}, headers: { "authorization" => @auth_token })
         puts response
-
     end
+    
+    def create_submission(assignment_branch, assignment_commit_link, checkpoint_id, comment, enrollment_id)
+        response = self.class.post(base_url("checkpoint_submissions"), body: { "assignment_branch": assignment_branch, "assignment_commit_link": assignment_commit_link, "checkpoint_id": checkpoint_id, "comment": comment, "enrollment_id": enrollment_id}, headers: { "authorization" => @auth_token })
+        puts response
+    end
+        
 
     private
     
